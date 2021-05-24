@@ -1,23 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import "./quotes";
+import { useState, useEffect } from "react";
+import randomQuote from "./quotes";
 
 function App() {
+  const [quote, setQuote] = useState({});
+
+  useEffect(() => {
+    const quote = randomQuote();
+    setQuote(quote);
+  }, []);
+
+  const handleClick = () => {
+    const quote = randomQuote();
+    setQuote(quote);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <div className="row align-middle">
+        <div className="col"></div>
+
+        <div id="quote-box" className="col p-3 border border-primary">
+          <div id="text">{quote.quote}</div>
+          <div id="author">{quote.author}</div>
+          <button id="new-quote" onClick={handleClick}>
+            New Quote
+          </button>
+          <a
+            href={`https://twitter.com/intent/tweet?hashtag=quotes&text=${encodeURIComponent(
+              '"' + quote.quote + '" ' + quote.author
+            )}`}
+            target="_top"
+            id="tweet-quote"
+          >
+            tweet quote
+          </a>
+        </div>
+
+        <div className="col"></div>
+      </div>
     </div>
   );
 }
